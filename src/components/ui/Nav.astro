@@ -9,6 +9,7 @@ const navItems = [
   { href: '/dogs', label: 'Собаки' },
   { href: '/events', label: 'Соревнования' },
   { href: '/knowledge', label: 'База знаний' },
+  { href: '/knowledge/titles', label: 'Титулы' },
 ];
 ---
 
@@ -18,7 +19,7 @@ const navItems = [
     {navItems.map(item => (
       <a 
         href={item.href} 
-        class={`nav-link ${currentPath === item.href ? 'nav-link--active' : ''}`}
+        class={`nav-link ${currentPath === item.href || (item.href === '/knowledge/titles' && currentPath.startsWith('/knowledge/titles')) ? 'nav-link--active' : ''}`}
       >
         {item.label}
       </a>
