@@ -1,0 +1,226 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/ui/Nav.astro';
+import '../../styles/global.css';
+---
+
+<BaseLayout title="База знаний">
+  <Nav currentPath="/knowledge" />
+
+  <!-- HERO -->
+  <section class="knowledge-hero">
+    <div class="knowledge-hero-bg"></div>
+    <div class="knowledge-hero-content">
+      <span class="section-tag">Информация</span>
+      <h1>База знаний</h1>
+      <p class="knowledge-hero-sub">Полезная информация о салюки, курсинге и выставках.</p>
+    </div>
+  </section>
+
+  <!-- TITLE TREE -->
+  <section class="title-tree-section">
+    <div class="section-header">
+      <span class="section-tag">Достижения</span>
+      <h2>Дерево титулов</h2>
+    </div>
+    <div class="title-tree-placeholder">
+      <p>Интерактивное дерево титулов появится здесь.</p>
+      <span>Раздел в разработке</span>
+      <button class="placeholder-btn">Узнать когда будет готово</button>
+    </div>
+  </section>
+
+  <!-- FAST INFO -->
+  <section class="fast-info-section">
+    <div class="section-header">
+      <span class="section-tag">Быстрая информация</span>
+      <h2>Fast Info</h2>
+    </div>
+    
+    <div class="info-grid">
+      <!-- LURE COURSING RULES -->
+      <div class="info-card">
+        <h3>Правила замера салюки на курсинге</h3>
+        <div class="info-content">
+          <p><strong>Высота в холке:</strong> Измеряется от высшей точки холки до земли. Собака должна стоять ровно, в естественной позе.</p>
+          <p><strong>Методика:</strong></p>
+          <ul>
+            <li>Используется измерительная линейка или штангенциркуль</li>
+            <li>Измерение проводится трижды, берётся среднее значение</li>
+            <li>Собака не должна напряжённо стоять или приседать</li>
+            <li>Для курсинга важен точный замер для определения категории</li>
+          </ul>
+          <p><strong>Категории по высоте:</strong></p>
+          <ul>
+            <li>Малые: до 38 см</li>
+            <li>Средние: 38-48 см</li>
+            <li>Крупные: более 48 см</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- EQUIPMENT SIZES -->
+      <div class="info-card">
+        <h3>Стандартные размеры попон и намордников для бегов</h3>
+        <div class="info-content">
+          <p><strong>Попоны:</strong></p>
+          <ul>
+            <li>XS: длина спины 35-40 см</li>
+            <li>S: длина спины 40-45 см</li>
+            <li>M: длина спины 45-55 см</li>
+            <li>L: длина спины 55-65 см</li>
+            <li>XL: длина спины 65-75 см</li>
+          </ul>
+          <p><strong>Намордники:</strong></p>
+          <ul>
+            <li>Для салюки обычно размеры 4-6 (по таблице производителей)</li>
+            <li>Измеряется обхват морды за глазами и длина от глаз до кончика носа</li>
+            <li>Намордник должен плотно прилегать, но не натирать</li>
+            <li>Для курсинга используются специальные беговые намордники</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- RKF QUALIFICATION BOOK -->
+      <div class="info-card">
+        <h3>Требования к квалификационной книжке РКФ</h3>
+        <div class="info-content">
+          <p><strong>Для участия в соревнованиях:</strong></p>
+          <ul>
+            <li>Книжка должна быть оформлена на владельца собаки</li>
+            <li>Внесены все данные о собаке (кличка, порода, номер родословной)</li>
+            <li>Есть фотография собаки</li>
+            <li>Книжка действующая (не просроченная)</li>
+          </ul>
+          <p><strong>Заполнение:</strong></p>
+          <ul>
+            <li>Все записи вносятся организаторами соревнований</li>
+            <li>Подтверждаются печатью и подписью судьи</li>
+            <li>Указывается тип соревнования, дата, место, результат</li>
+            <li>Для курсинга и рейсинга — категория и время</li>
+          </ul>
+          <p><strong>Важно:</strong> Без квалификационной книжки результаты не засчитываются для получения титулов.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+/* HERO */
+.knowledge-hero {
+  position: relative;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  padding: 8rem 4rem 4rem;
+}
+.knowledge-hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 50% 70% at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 70%);
+}
+.knowledge-hero-content { position: relative; }
+.section-tag {
+  display: inline-block;
+  font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.75rem;
+}
+.knowledge-hero h1 {
+  font-size: clamp(3rem, 6vw, 5rem);
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+.knowledge-hero-sub {
+  font-size: 1.1rem; color: var(--text-muted);
+  max-width: 500px;
+}
+
+/* TITLE TREE */
+.title-tree-section {
+  padding: 4rem 4rem;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+.section-header { margin-bottom: 2.5rem; }
+.section-header h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); }
+.title-tree-placeholder {
+  border: 1px dashed var(--border);
+  padding: 4rem;
+  max-width: 600px;
+  text-align: center;
+  color: var(--text-muted);
+}
+.title-tree-placeholder p { margin-bottom: 0.5rem; font-size: 1rem; }
+.title-tree-placeholder span {
+  font-size: 0.75rem; letter-spacing: 0.15em;
+  color: var(--gold-dim); text-transform: uppercase;
+  display: block;
+  margin-bottom: 2rem;
+}
+.placeholder-btn {
+  padding: 0.75rem 2rem;
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--gold);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.placeholder-btn:hover { background: var(--gold); color: var(--bg); }
+
+/* FAST INFO */
+.fast-info-section {
+  padding: 4rem 4rem;
+  border-top: 1px solid var(--border);
+}
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  border: 1px solid var(--border);
+  max-width: 900px;
+}
+.info-card {
+  background: var(--bg);
+  padding: 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.info-card:last-child { border-bottom: none; }
+.info-card h3 {
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.info-content {
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+.info-content p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+.info-content strong {
+  color: var(--text);
+}
+.info-content ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+.info-content li {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .knowledge-hero { padding: 6rem 1.5rem 3rem; min-height: 40vh; }
+  .title-tree-section, .fast-info-section { padding: 3rem 1.5rem; }
+  .title-tree-placeholder { padding: 3rem 1.5rem; }
+  .info-card { padding: 2rem 1.5rem; }
+  .info-card h3 { font-size: 1.3rem; }
+}
+</style>

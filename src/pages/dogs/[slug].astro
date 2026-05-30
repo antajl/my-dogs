@@ -1,0 +1,259 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { dogs } from '../../data/dogs';
+import Nav from '../../components/ui/Nav.astro';
+import '../../styles/global.css';
+
+export function getStaticPaths() {
+  return dogs.map(dog => ({ params: { slug: dog.slug }, props: { dog } }));
+}
+
+const { dog } = Astro.props;
+---
+
+<BaseLayout title={dog.nickname}>
+  <Nav currentPath={`/dogs/${dog.slug}`} />
+
+  <!-- HERO -->
+  <section class="dog-hero">
+    <div class="dog-hero-bg"></div>
+    <div class="dog-hero-content">
+      <a href="/" class="back-link">← Все собаки</a>
+      <div class="dog-hero-tags">
+        {dog.tags.map(t => <span class="tag">{t}</span>)}
+      </div>
+      <h1 class="dog-title">{dog.nickname}</h1>
+      <p class="dog-fullname-hero">{dog.fullName}</p>
+      <p class="dog-bio">{dog.bio}</p>
+    </div>
+    <div class="dog-hero-photo" style={dog.photos.length > 0 ? `background-image: url('${dog.photos[0]}')` : ''}>
+      {dog.photos.length === 0 && (
+        <div class="photo-placeholder">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.75">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          <p>Фото появится здесь</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- PASSPORT -->
+  <section class="passport-section">
+    <div class="section-header">
+      <span class="section-tag">Документы</span>
+      <h2>Паспорт собаки</h2>
+    </div>
+    <div class="passport-grid">
+      {[
+        { label: "Полная кличка", value: dog.fullName },
+        { label: "Кличка (EN)", value: dog.fullNameEn },
+        { label: "Порода", value: `${dog.breed} · ${dog.breedCode}` },
+        { label: "Дата рождения", value: dog.born },
+        { label: "Номер РКФ", value: dog.rkfNumber },
+        { label: "Клеймо", value: dog.brand },
+        { label: "Чип", value: dog.chip },
+        { label: "№ квал. книжки", value: dog.bookNumber },
+      ].map(row => (
+        <div class="passport-row">
+          <span class="passport-label">{row.label}</span>
+          <span class="passport-value">{row.value}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- TITLES -->
+  <section class="titles-section">
+    <div class="section-header">
+      <span class="section-tag">Достижения</span>
+      <h2>Титулы и сертификаты</h2>
+    </div>
+    <div class="titles-empty">
+      <p>Титулы этой собаки появятся здесь.</p>
+      <span>Раздел в разработке</span>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section">
+    <div class="section-header">
+      <span class="section-tag">Галерея</span>
+      <h2>Фото и видео</h2>
+    </div>
+    {dog.photos.length > 0 ? (
+      <div class="gallery-grid">
+        {dog.photos.map((photo, index) => (
+          <div class="gallery-item">
+            <img src={photo} alt={`${dog.nickname} фото ${index + 1}`} loading="lazy" />
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="gallery-empty">
+        <p>Галерея появится здесь после добавления фотографий.</p>
+      </div>
+    )}
+  </section>
+</BaseLayout>
+
+<style>
+/* HERO */
+.dog-hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 6rem 4rem 4rem;
+  gap: 4rem;
+  position: relative;
+}
+.dog-hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 50% 70% at 20% 50%, rgba(201,168,76,0.05) 0%, transparent 70%);
+}
+.dog-hero-content { position: relative; }
+.back-link {
+  display: inline-block; margin-bottom: 2rem;
+  color: var(--text-muted); text-decoration: none;
+  font-size: 0.8rem; letter-spacing: 0.1em;
+  transition: color 0.3s;
+}
+.back-link:hover { color: var(--gold); }
+.dog-hero-tags { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.tag {
+  font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--gold-dim); color: var(--gold-dim);
+}
+.dog-title {
+  font-size: clamp(4rem, 8vw, 7rem);
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  animation: fadeUp 0.8s ease both;
+}
+.dog-fullname-hero {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-style: italic;
+  color: var(--gold-dim); margin-bottom: 1.5rem;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+.dog-bio {
+  font-size: 1.1rem; color: var(--text-muted);
+  max-width: 420px; line-height: 1.8;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+.dog-hero-photo {
+  position: relative;
+  height: 600px;
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg, #161616, #1e1e1e);
+  display: flex; align-items: center; justify-content: center;
+  animation: fadeUp 0.8s 0.3s ease both;
+  background-size: cover;
+  background-position: center;
+}
+.photo-placeholder {
+  text-align: center; color: var(--border);
+  display: flex; flex-direction: column; align-items: center; gap: 1rem;
+}
+.photo-placeholder p { font-size: 0.8rem; letter-spacing: 0.1em; color: var(--text-muted); }
+
+/* PASSPORT */
+.passport-section {
+  padding: 4rem 4rem;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+.section-header { margin-bottom: 2.5rem; }
+.section-tag {
+  display: inline-block;
+  font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.75rem;
+}
+.section-header h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); }
+
+.passport-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  max-width: 900px;
+}
+.passport-row {
+  display: flex; flex-direction: column;
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+.passport-row:nth-child(even) { border-right: none; }
+.passport-label {
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: 0.4rem;
+}
+.passport-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem; color: var(--text);
+}
+
+/* TITLES */
+.titles-section {
+  padding: 4rem 4rem;
+  border-top: 1px solid var(--border);
+}
+.titles-empty {
+  border: 1px dashed var(--border);
+  padding: 3rem; max-width: 500px;
+  color: var(--text-muted);
+}
+.titles-empty p { margin-bottom: 0.5rem; }
+.titles-empty span { font-size: 0.75rem; letter-spacing: 0.15em; color: var(--gold-dim); text-transform: uppercase; }
+
+/* GALLERY */
+.gallery-section {
+  padding: 4rem 4rem;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  border: 1px solid var(--border);
+}
+.gallery-item {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--bg);
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+.gallery-empty {
+  border: 1px dashed var(--border);
+  padding: 3rem; max-width: 500px;
+  color: var(--text-muted);
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .dog-hero { grid-template-columns: 1fr; padding: 5rem 1.5rem 3rem; gap: 2rem; }
+  .dog-hero-photo { height: 300px; }
+  .passport-section, .titles-section, .gallery-section { padding: 3rem 1.5rem; }
+  .passport-grid { grid-template-columns: 1fr; }
+  .passport-row { border-right: none; }
+  .gallery-grid { grid-template-columns: 1fr; }
+}
+</style>
