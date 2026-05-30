@@ -1,17 +1,237 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/global.css';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Главная">
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="/" class="nav-logo">MY DOGS</a>
+    <div class="nav-links">
+      <a href="/dogs">Собаки</a>
+      <a href="/events">Соревнования</a>
+      <a href="/knowledge">База знаний</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Наша команда</p>
+      <h1 class="hero-title">Скорость.<br/>Элегантность.<br/>Характер.</h1>
+      <p class="hero-sub">Три собаки. Две породы. Один путь — к вершине.</p>
+      <a href="/dogs" class="hero-cta">Познакомиться</a>
+    </div>
+    <div class="hero-scroll">
+      <span>Листай вниз</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- DOGS PREVIEW -->
+  <section class="dogs-section">
+    <div class="section-header">
+      <span class="section-tag">Спортсменки</span>
+      <h2>Наши собаки</h2>
+    </div>
+    <div class="dogs-grid">
+      {[
+        { name: "Собака 1", breed: "Салюки", tags: ["Курсинг", "Шоу"], slug: "dog-1" },
+        { name: "Собака 2", breed: "Салюки", tags: ["Курсинг", "Шоу"], slug: "dog-2" },
+        { name: "Собака 3", breed: "Веймаранер", tags: ["Шоу", "Рейсинг"], slug: "dog-3" },
+      ].map(dog => (
+        <a href={`/dogs/${dog.slug}`} class="dog-card">
+          <div class="dog-card-img">
+            <div class="dog-card-placeholder">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+            </div>
+          </div>
+          <div class="dog-card-body">
+            <div class="dog-card-tags">
+              {dog.tags.map(t => <span class="tag">{t}</span>)}
+            </div>
+            <h3>{dog.name}</h3>
+            <p class="dog-breed">{dog.breed}</p>
+            <span class="dog-link">Перейти →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- UPCOMING EVENTS TEASER -->
+  <section class="events-teaser">
+    <div class="events-inner">
+      <div class="section-header">
+        <span class="section-tag">Расписание</span>
+        <h2>Ближайшие события</h2>
+      </div>
+      <p class="events-placeholder">Календарь соревнований появится здесь — выставки, курсинг, рейсинг.</p>
+      <a href="/events" class="ghost-btn">Смотреть календарь</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+/* NAV */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 4rem;
+  background: linear-gradient(to bottom, rgba(14,14,14,0.95), transparent);
+  backdrop-filter: blur(4px);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem; letter-spacing: 0.25em;
+  color: var(--gold); text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.5rem; }
+.nav-links a {
+  color: var(--text-muted); text-decoration: none;
+  font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* HERO */
+.hero {
+  position: relative; height: 100vh; min-height: 600px;
+  display: flex; align-items: center;
+  padding: 0 4rem;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 20% 80%, rgba(143,163,177,0.05) 0%, transparent 60%);
+}
+.hero-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-content { position: relative; max-width: 700px; }
+.hero-eyebrow {
+  font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.5rem;
+  animation: fadeUp 0.8s ease both;
+}
+.hero-title {
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  color: var(--text); margin-bottom: 1.5rem;
+  animation: fadeUp 0.8s 0.15s ease both;
+}
+.hero-sub {
+  font-size: 1.1rem; color: var(--text-muted); margin-bottom: 3rem;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+.hero-cta {
+  display: inline-block;
+  padding: 0.9rem 2.5rem;
+  border: 1px solid var(--gold);
+  color: var(--gold); text-decoration: none;
+  font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
+  transition: all 0.3s;
+  animation: fadeUp 0.8s 0.45s ease both;
+}
+.hero-cta:hover { background: var(--gold); color: var(--bg); }
+.hero-scroll {
+  position: absolute; bottom: 3rem; left: 4rem;
+  display: flex; align-items: center; gap: 1rem;
+  color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  animation: fadeUp 0.8s 0.6s ease both;
+}
+.scroll-line {
+  width: 60px; height: 1px; background: var(--gold-dim);
+  animation: expandLine 1.2s 1s ease both;
+}
+
+/* DOGS SECTION */
+.dogs-section {
+  padding: 8rem 4rem;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+.section-header { margin-bottom: 3rem; }
+.section-tag {
+  display: inline-block;
+  font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.75rem;
+}
+.section-header h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
+
+.dogs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
+}
+.dog-card {
+  display: block; text-decoration: none; color: inherit;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  transition: border-color 0.3s;
+  overflow: hidden;
+}
+.dog-card:hover { border-color: var(--gold); }
+.dog-card:hover .dog-card-img { transform: scale(1.03); }
+.dog-card-img {
+  height: 320px; overflow: hidden;
+  background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.6s ease;
+}
+.dog-card-placeholder { color: var(--border); }
+.dog-card-body { padding: 1.75rem; }
+.dog-card-tags { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; }
+.tag {
+  font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--gold-dim); color: var(--gold-dim);
+}
+.dog-card-body h3 { font-size: 1.8rem; margin-bottom: 0.25rem; }
+.dog-breed { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+.dog-link { font-size: 0.75rem; letter-spacing: 0.1em; color: var(--gold); }
+
+/* EVENTS TEASER */
+.events-teaser {
+  padding: 8rem 4rem;
+  border-top: 1px solid var(--border);
+}
+.events-placeholder {
+  color: var(--text-muted); max-width: 500px;
+  margin-bottom: 2rem;
+}
+.ghost-btn {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  border: 1px solid var(--border);
+  color: var(--text-muted); text-decoration: none;
+  font-size: 0.8rem; letter-spacing: 0.1em;
+  transition: all 0.3s;
+}
+.ghost-btn:hover { border-color: var(--steel); color: var(--steel); }
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes expandLine {
+  from { width: 0; }
+  to   { width: 60px; }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .nav { padding: 1.25rem 1.5rem; }
+  .nav-links { gap: 1.5rem; }
+  .hero { padding: 0 1.5rem; }
+  .hero-scroll { left: 1.5rem; }
+  .dogs-section, .events-teaser { padding: 5rem 1.5rem; }
+  .dogs-grid { grid-template-columns: 1fr; }
+}
+</style>
